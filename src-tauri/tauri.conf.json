@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "pqViewer",
+  "productName": "ParquetView",
   "version": "1.0.0",
-  "identifier": "com.fcatus.pqviewer",
+  "identifier": "com.fcatus.parquetview",
   "build": {
     "frontendDist": "../src"
   },
@@ -10,7 +10,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "pqViewer",
+        "title": "ParquetView",
         "width": 1240,
         "height": 820,
         "minWidth": 720,

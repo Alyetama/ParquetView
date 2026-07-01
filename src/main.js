@@ -139,7 +139,7 @@ async function openPath(path) {
     searchInput.value = "";
     searchClear.classList.add("hidden");
     fileNameEl.textContent = meta.file_name;
-    document.title = "pqViewer — " + meta.file_name;
+    document.title = "ParquetView — " + meta.file_name;
 
     // The table is visible now, so viewport.clientWidth is valid for sizing.
     computeColWidths();
@@ -537,7 +537,7 @@ const FONT_PX = { small: 11, default: 12, large: 13 };
 
 function loadSettings() {
   try {
-    const raw = localStorage.getItem("pqviewer.settings");
+    const raw = localStorage.getItem("parquetview.settings");
     if (raw) settings = { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
   } catch (_) {
     /* ignore corrupt settings */
@@ -545,7 +545,7 @@ function loadSettings() {
 }
 function saveSettings() {
   try {
-    localStorage.setItem("pqviewer.settings", JSON.stringify(settings));
+    localStorage.setItem("parquetview.settings", JSON.stringify(settings));
   } catch (_) {
     /* ignore */
   }

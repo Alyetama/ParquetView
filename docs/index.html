@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pqViewer — a fast, native macOS Parquet viewer</title>
+    <title>ParquetView — a fast, native macOS Parquet viewer</title>
     <meta name="description" content="A fast, native macOS viewer for Apache Parquet files. Opens multi-gigabyte files instantly." />
-    <meta property="og:title" content="pqViewer" />
+    <meta property="og:title" content="ParquetView" />
     <meta property="og:description" content="A fast, native macOS viewer for Apache Parquet files." />
-    <meta property="og:image" content="https://alyetama.github.io/pqViewer/mockup.png" />
+    <meta property="og:image" content="https://alyetama.github.io/ParquetView/mockup.png" />
     <meta property="og:type" content="website" />
     <link rel="icon" href="mockup.png" />
     <style>
@@ -130,12 +130,12 @@
   <body>
     <div class="wrap">
       <header>
-        <div class="logo"><span class="glyph"></span>pqViewer</div>
+        <div class="logo"><span class="glyph"></span>ParquetView</div>
         <p class="tagline">A fast, native macOS viewer for Apache&nbsp;Parquet files.</p>
 
         <div class="cta">
           <a class="download" id="downloadBtn"
-             href="https://github.com/Alyetama/pqViewer/releases/latest/download/pqViewer.dmg">
+             href="https://github.com/Alyetama/ParquetView/releases/latest/download/ParquetView.dmg">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -147,7 +147,7 @@
       </header>
 
       <div class="shot">
-        <img src="mockup.png" alt="pqViewer showing a Parquet file with 500,000 rows" />
+        <img src="mockup.png" alt="ParquetView showing a Parquet file with 500,000 rows" />
       </div>
 
       <section class="card">
@@ -165,19 +165,19 @@
 
       <section class="card" id="open-instructions">
         <h2>How to open the app</h2>
-        <p class="lead">pqViewer isn't signed with an Apple Developer ID, so macOS blocks it the first time. This is expected — open it with <b>one</b> of these:</p>
+        <p class="lead">ParquetView isn't signed with an Apple Developer ID, so macOS blocks it the first time. This is expected — open it with <b>one</b> of these:</p>
         <ol class="steps">
-          <li><b>Right‑click to open.</b> In Finder, <b>right‑click</b> (or Control‑click) <b>pqViewer</b> → <b>Open</b> → <b>Open</b>.</li>
-          <li><b>If that's blocked on newer macOS:</b> open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to the pqViewer message.</li>
+          <li><b>Right‑click to open.</b> In Finder, <b>right‑click</b> (or Control‑click) <b>ParquetView</b> → <b>Open</b> → <b>Open</b>.</li>
+          <li><b>If that's blocked on newer macOS:</b> open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to the ParquetView message.</li>
           <li>
             <b>Terminal fallback:</b> remove the quarantine flag, then open normally:
-            <pre><code>xattr -dr com.apple.quarantine /Applications/pqViewer.app</code></pre>
+            <pre><code>xattr -dr com.apple.quarantine /Applications/ParquetView.app</code></pre>
           </li>
         </ol>
       </section>
 
       <footer>
-        <a href="https://github.com/Alyetama/pqViewer">View source on GitHub</a> · MIT © 2026 Alyetama
+        <a href="https://github.com/Alyetama/ParquetView">View source on GitHub</a> · MIT © 2026 Alyetama
       </footer>
     </div>
 

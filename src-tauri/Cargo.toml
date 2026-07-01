@@ -1,5 +1,5 @@
 [package]
-name = "pqviewer"
+name = "parquetview"
 version = "1.0.0"
 description = "A fast, native macOS viewer for Apache Parquet files"
 authors = ["fcatus"]

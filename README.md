@@ -1,24 +1,24 @@
-<h1 align="center">pqViewer</h1>
+<h1 align="center">ParquetView</h1>
 
 <p align="center">A fast, native macOS viewer for Apache Parquet files.</p>
 
 <p align="center">
-  <a href="https://github.com/Alyetama/pqViewer/releases/latest/download/pqViewer.dmg"><b>⬇️ Download for macOS</b></a>
+  <a href="https://github.com/Alyetama/ParquetView/releases/latest/download/ParquetView.dmg"><b>⬇️ Download for macOS</b></a>
   &nbsp;·&nbsp;
-  <a href="https://alyetama.github.io/pqViewer">Website</a>
+  <a href="https://alyetama.github.io/ParquetView">Website</a>
   &nbsp;·&nbsp;
   <a href="#first-launch">First launch</a>
 </p>
 
 <p align="center">
-  <img src="docs/mockup.png" alt="pqViewer showing a Parquet file" width="820">
+  <img src="docs/mockup.png" alt="ParquetView showing a Parquet file" width="820">
 </p>
 
 ## Download
 
-**[⬇️ Download pqViewer for macOS](https://github.com/Alyetama/pqViewer/releases/latest/download/pqViewer.dmg)** (Apple Silicon)
+**[⬇️ Download ParquetView for macOS](https://github.com/Alyetama/ParquetView/releases/latest/download/ParquetView.dmg)** (Apple Silicon)
 
-Open the `.dmg`, drag **pqViewer** to Applications, then follow [First launch](#first-launch) below.
+Open the `.dmg`, drag **ParquetView** to Applications, then follow [First launch](#first-launch) below.
 
 ## Features
 
@@ -32,13 +32,13 @@ Open the `.dmg`, drag **pqViewer** to Applications, then follow [First launch](#
 
 ## First launch
 
-pqViewer isn't signed with an Apple Developer ID, so macOS blocks it the first time. This is expected — open it with **one** of these:
+ParquetView isn't signed with an Apple Developer ID, so macOS blocks it the first time. This is expected — open it with **one** of these:
 
-1. **Right‑click to open.** In Finder, **right‑click** (or Control‑click) **pqViewer** → **Open** → **Open**.
-2. **If that's blocked on newer macOS:** open **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to the pqViewer message.
+1. **Right‑click to open.** In Finder, **right‑click** (or Control‑click) **ParquetView** → **Open** → **Open**.
+2. **If that's blocked on newer macOS:** open **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to the ParquetView message.
 3. **Terminal fallback:** remove the quarantine flag, then open normally:
    ```bash
-   xattr -dr com.apple.quarantine /Applications/pqViewer.app
+   xattr -dr com.apple.quarantine /Applications/ParquetView.app
    ```
 
 ## Build from source
@@ -47,7 +47,7 @@ Requires Rust, Node 18+, and Xcode command‑line tools.
 
 ```bash
 npm install
-npm run tauri build   # → src-tauri/target/release/bundle/macos/pqViewer.app
+npm run tauri build   # → src-tauri/target/release/bundle/macos/ParquetView.app
 ```
 
 For development with hot reload: `npm run tauri dev`.

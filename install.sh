@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Build pqViewer, ad-hoc sign it, and install it to /Applications.
+# Build ParquetView, ad-hoc sign it, and install it to /Applications.
 #
 # The Tauri bundler's final step calls `xattr` by name; if a non-Apple `xattr`
 # (e.g. the conda shim) is first on PATH, that step errors *after* the .app is
@@ -10,7 +10,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-APP_NAME="pqViewer.app"
+APP_NAME="ParquetView.app"
 BUNDLE="$ROOT/src-tauri/target/release/bundle/macos/$APP_NAME"
 DEST="/Applications/$APP_NAME"
 LSREGISTER=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister

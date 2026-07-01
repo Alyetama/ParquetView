@@ -870,7 +870,7 @@ fn main() {
             Ok(())
         })
         .build(tauri::generate_context!())
-        .expect("error while building pqViewer")
+        .expect("error while building ParquetView")
         .run(|app_handle, event| {
             // macOS delivers "Open With" / dock-drop files through this event.
             if let tauri::RunEvent::Opened { urls } = event {
@@ -889,7 +889,7 @@ fn main() {
 
 // ---------------------------------------------------------------------------
 // Tests — exercise the read engine against a real file.
-// Run with: PQVIEWER_TEST_FILE=/path/to/sample.parquet cargo test
+// Run with: PARQUETVIEW_TEST_FILE=/path/to/sample.parquet cargo test
 // Tests are skipped when the env var is unset.
 // ---------------------------------------------------------------------------
 
@@ -914,7 +914,7 @@ mod tests {
     }
 
     fn sample() -> Option<String> {
-        std::env::var("PQVIEWER_TEST_FILE").ok()
+        std::env::var("PARQUETVIEW_TEST_FILE").ok()
     }
 
     #[test]
