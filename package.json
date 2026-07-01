@@ -1,7 +1,7 @@
 {
   "name": "parquetview",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fast, native macOS viewer for Apache Parquet files",
   "scripts": {
     "tauri": "tauri",

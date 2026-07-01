@@ -23,6 +23,10 @@ use tauri::{Emitter, Manager, State};
 // huge files. Beyond this the result set is marked truncated.
 const SEARCH_CAP: usize = 100_000;
 
+// Upper bound on rows fetched in a single `get_rows` call (defense in depth
+// against an over-large `limit`).
+const MAX_PAGE: usize = 10_000;
+
 // ---------------------------------------------------------------------------
 // Types serialized to the frontend
 // ---------------------------------------------------------------------------
@@ -676,6 +680,15 @@ async fn open_file(state: State<'_, AppState>, path: String) -> Result<FileMeta,
     let num_row_groups = pq.num_row_groups();
     let num_columns = schema.fields().len();
 
+    // Row indices are tracked as u32 throughout; refuse files that would overflow
+    // it rather than silently wrapping.
+    if num_rows > u32::MAX as i64 {
+        return Err(format!(
+            "File has {num_rows} rows, which exceeds the {} row limit.",
+            u32::MAX
+        ));
+    }
+
     // Collect the distinct compression codecs used across row group 0.
     let compression = if num_row_groups > 0 {
         let rg = pq.row_group(0);
@@ -748,6 +761,23 @@ async fn get_rows(
     let num_rows = cache.num_rows;
     let num_columns = cache.num_columns;
     let meta = cache.meta.clone();
+
+    // Validate/clamp caller-supplied parameters (defense in depth; the advanced
+    // filter path validates its own columns in `run_advanced`).
+    let limit = limit.min(MAX_PAGE);
+    if let Some(s) = &sort {
+        if s.column >= num_columns {
+            return Err("Sort column is out of range".to_string());
+        }
+    }
+    if let Some(FilterSpec::Simple {
+        column: Some(c), ..
+    }) = &filter
+    {
+        if *c >= num_columns {
+            return Err("Filter column is out of range".to_string());
+        }
+    }
 
     // Resolve the active filter into a set of matching global indices.
     let filtered: Option<Vec<u32>> = match &filter {
