@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pqViewer — a fast, native macOS Parquet viewer</title>
+    <meta name="description" content="A fast, native macOS viewer for Apache Parquet files. Opens multi-gigabyte files instantly." />
+    <meta property="og:title" content="pqViewer" />
+    <meta property="og:description" content="A fast, native macOS viewer for Apache Parquet files." />
+    <meta property="og:image" content="https://alyetama.github.io/pqViewer/mockup.png" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="mockup.png" />
+    <style>
+      :root {
+        --ink: #f4f5fb;
+        --dim: #b8bce0;
+        --accent: #8194ff;
+        --card: rgba(255, 255, 255, 0.06);
+        --border: rgba(255, 255, 255, 0.14);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+        color: var(--ink);
+        background: #2a2170;
+        background: linear-gradient(160deg, #8194ff 0%, #4a3fb0 46%, #241c66 100%) no-repeat;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.55;
+      }
+      .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+      header { text-align: center; padding: 88px 0 20px; }
+      .logo {
+        font-size: 46px; font-weight: 800; letter-spacing: -0.02em;
+        display: inline-flex; align-items: center; gap: 14px;
+      }
+      .logo .glyph {
+        width: 52px; height: 52px; border-radius: 13px;
+        background: linear-gradient(160deg, #6e8bff, #2c3ec0);
+        box-shadow: 0 10px 26px rgba(20, 20, 70, 0.45);
+        display: inline-block; position: relative;
+      }
+      .logo .glyph::before {
+        content: ""; position: absolute; inset: 12px 11px;
+        border-radius: 4px; background: #f7f9ff;
+        box-shadow: inset 0 8px 0 -6px #1f3aa6;
+      }
+      .tagline { font-size: 20px; color: var(--dim); margin-top: 16px; }
+
+      .cta { margin: 30px 0 6px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+      .download {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: #fff; color: #26308a;
+        font-size: 18px; font-weight: 650;
+        padding: 15px 30px; border-radius: 13px;
+        text-decoration: none;
+        box-shadow: 0 14px 34px rgba(15, 15, 60, 0.4);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .download:hover { transform: translateY(-2px); box-shadow: 0 20px 44px rgba(15, 15, 60, 0.5); }
+      .download svg { width: 20px; height: 20px; }
+      .sub { font-size: 13.5px; color: var(--dim); }
+
+      .shot { margin: 42px 0 20px; }
+      .shot img {
+        width: 100%; height: auto; display: block;
+        border-radius: 14px;
+        box-shadow: 0 30px 80px rgba(10, 10, 45, 0.5);
+      }
+
+      section.card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 30px 32px;
+        margin: 26px 0;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+      #open-instructions { scroll-margin-top: 24px; }
+      section.card h2 { font-size: 24px; letter-spacing: -0.01em; margin-bottom: 6px; }
+      section.card p.lead { color: var(--dim); margin-bottom: 18px; }
+      ol.steps { list-style: none; counter-reset: step; display: grid; gap: 14px; }
+      ol.steps li {
+        counter-increment: step; position: relative;
+        padding: 14px 16px 14px 56px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+      ol.steps li::before {
+        content: counter(step);
+        position: absolute; left: 14px; top: 13px;
+        width: 28px; height: 28px; border-radius: 50%;
+        background: var(--accent); color: #1a1550;
+        font-weight: 800; font-size: 14px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      ol.steps b { color: #fff; }
+      code {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid var(--border);
+        padding: 2px 7px; border-radius: 6px; font-size: 13.5px;
+        color: #dfe4ff; word-break: break-all;
+      }
+      pre {
+        margin-top: 10px; background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--border); border-radius: 10px;
+        padding: 12px 14px; overflow-x: auto;
+      }
+      pre code { background: none; border: none; padding: 0; }
+
+      .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+      .feat { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+      .feat h3 { font-size: 15px; margin-bottom: 4px; }
+      .feat p { font-size: 13.5px; color: var(--dim); }
+
+      .flash { animation: flash 1.6s ease; }
+      @keyframes flash {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(129, 148, 255, 0); }
+        18% { box-shadow: 0 0 0 4px rgba(129, 148, 255, 0.85); }
+      }
+
+      footer { text-align: center; color: var(--dim); font-size: 13.5px; padding: 30px 0 60px; }
+      footer a { color: #dfe4ff; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="logo"><span class="glyph"></span>pqViewer</div>
+        <p class="tagline">A fast, native macOS viewer for Apache&nbsp;Parquet files.</p>
+
+        <div class="cta">
+          <a class="download" id="downloadBtn"
+             href="https://github.com/Alyetama/pqViewer/releases/latest/download/pqViewer.dmg">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Download for macOS
+          </a>
+          <span class="sub">Free · Apple Silicon · unsigned (see how to open below)</span>
+        </div>
+      </header>
+
+      <div class="shot">
+        <img src="mockup.png" alt="pqViewer showing a Parquet file with 500,000 rows" />
+      </div>
+
+      <section class="card">
+        <h2>What it does</h2>
+        <p class="lead">Everything you need to browse Parquet, nothing you don't.</p>
+        <div class="features">
+          <div class="feat"><h3>Handles huge files</h3><p>Reads only the row groups on screen — multi‑gigabyte files open instantly.</p></div>
+          <div class="feat"><h3>Sort &amp; filter</h3><p>Sort any column; quick search or multi‑condition advanced filters (regex, ranges, AND/OR).</p></div>
+          <div class="feat"><h3>Full metadata</h3><p>Schema, types, file size, compression codec, row‑group count, writer, format version.</p></div>
+          <div class="feat"><h3>Open any way</h3><p>File picker, drag‑and‑drop, or Finder's “Open With”.</p></div>
+          <div class="feat"><h3>Inspect cells</h3><p>Double‑click a cell to copy its value or edit it inline.</p></div>
+          <div class="feat"><h3>Light &amp; dark</h3><p>Theme, row density, and font size — remembered between launches.</p></div>
+        </div>
+      </section>
+
+      <section class="card" id="open-instructions">
+        <h2>How to open the app</h2>
+        <p class="lead">pqViewer isn't signed with an Apple Developer ID, so macOS blocks it the first time. This is expected — open it with <b>one</b> of these:</p>
+        <ol class="steps">
+          <li><b>Right‑click to open.</b> In Finder, <b>right‑click</b> (or Control‑click) <b>pqViewer</b> → <b>Open</b> → <b>Open</b>.</li>
+          <li><b>If that's blocked on newer macOS:</b> open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to the pqViewer message.</li>
+          <li>
+            <b>Terminal fallback:</b> remove the quarantine flag, then open normally:
+            <pre><code>xattr -dr com.apple.quarantine /Applications/pqViewer.app</code></pre>
+          </li>
+        </ol>
+      </section>
+
+      <footer>
+        <a href="https://github.com/Alyetama/pqViewer">View source on GitHub</a> · MIT © 2026 Alyetama
+      </footer>
+    </div>
+
+    <script>
+      // Clicking Download also scrolls to (and briefly highlights) the open steps.
+      var btn = document.getElementById("downloadBtn");
+      var target = document.getElementById("open-instructions");
+      btn.addEventListener("click", function () {
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          target.classList.remove("flash");
+          void target.offsetWidth; // restart animation
+          target.classList.add("flash");
+        }, 350);
+      });
+    </script>
+  </body>
+</html>

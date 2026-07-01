@@ -1,0 +1,77 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Big Sur style background gradient: indigo -> blue -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6E8BFF"/>
+      <stop offset="0.55" stop-color="#4361E7"/>
+      <stop offset="1" stop-color="#2C3EC0"/>
+    </linearGradient>
+    <!-- Soft top-left sheen for subtle depth -->
+    <radialGradient id="sheen" cx="0.28" cy="0.2" r="0.9">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Panel drop shadow -->
+    <filter id="panelShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#0b1560" flood-opacity="0.35"/>
+    </filter>
+    <linearGradient id="header" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1F3AA6"/>
+      <stop offset="1" stop-color="#16297A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded-square app tile (macOS superellipse proportions) -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#sheen)"/>
+
+  <!-- Data table / columns panel -->
+  <g filter="url(#panelShadow)">
+    <rect x="258" y="272" width="508" height="480" rx="44" fill="#F7F9FF"/>
+
+    <!-- Header band -->
+    <path d="M258 316 a44 44 0 0 1 44 -44 h420 a44 44 0 0 1 44 44 v70 h-508 z" fill="url(#header)"/>
+    <!-- Header column ticks -->
+    <rect x="330" y="316" width="6" height="70" fill="#ffffff" opacity="0.22"/>
+    <rect x="470" y="316" width="6" height="70" fill="#ffffff" opacity="0.22"/>
+    <rect x="610" y="316" width="6" height="70" fill="#ffffff" opacity="0.22"/>
+
+    <!-- Columnar tint stripes (Parquet is columnar) -->
+    <rect x="330" y="386" width="140" height="366" fill="#4361E7" opacity="0.08"/>
+    <rect x="610" y="386" width="156" height="366" fill="#4361E7" opacity="0.08"/>
+
+    <!-- Column dividers -->
+    <rect x="330" y="386" width="4" height="366" fill="#C6D2F5"/>
+    <rect x="470" y="386" width="4" height="366" fill="#C6D2F5"/>
+    <rect x="610" y="386" width="4" height="366" fill="#C6D2F5"/>
+
+    <!-- Row dividers -->
+    <rect x="258" y="474" width="508" height="4" fill="#E1E8FB"/>
+    <rect x="258" y="562" width="508" height="4" fill="#E1E8FB"/>
+    <rect x="258" y="650" width="508" height="4" fill="#E1E8FB"/>
+
+    <!-- Cell value bars, varied to read as data -->
+    <g fill="#3A55D9">
+      <rect x="286" y="418" width="30" height="26" rx="6"/>
+      <rect x="350" y="418" width="96" height="26" rx="6" opacity="0.85"/>
+      <rect x="490" y="418" width="96" height="26" rx="6" opacity="0.85"/>
+      <rect x="630" y="418" width="110" height="26" rx="6"/>
+
+      <rect x="286" y="506" width="30" height="26" rx="6"/>
+      <rect x="350" y="506" width="70" height="26" rx="6" opacity="0.85"/>
+      <rect x="490" y="506" width="110" height="26" rx="6" opacity="0.85"/>
+      <rect x="630" y="506" width="80" height="26" rx="6"/>
+
+      <rect x="286" y="594" width="30" height="26" rx="6"/>
+      <rect x="350" y="594" width="104" height="26" rx="6" opacity="0.85"/>
+      <rect x="490" y="594" width="64" height="26" rx="6" opacity="0.85"/>
+      <rect x="630" y="594" width="110" height="26" rx="6"/>
+
+      <rect x="286" y="682" width="30" height="26" rx="6"/>
+      <rect x="350" y="682" width="88" height="26" rx="6" opacity="0.85"/>
+      <rect x="490" y="682" width="96" height="26" rx="6" opacity="0.85"/>
+      <rect x="630" y="682" width="70" height="26" rx="6"/>
+    </g>
+  </g>
+</svg>

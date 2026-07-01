@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pqViewer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Toolbar -->
+    <header id="toolbar">
+      <div class="tb-left">
+        <button id="openBtn" class="btn primary" title="Open a Parquet file (⌘O)">
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+            <path fill="currentColor" d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z"/>
+          </svg>
+          Open
+        </button>
+        <span id="fileName" class="file-name"></span>
+      </div>
+
+      <div class="tb-right">
+        <div id="searchWrap" class="search-wrap hidden">
+          <select id="searchColumn" class="select" title="Column to search"></select>
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
+            </svg>
+            <input id="searchInput" type="text" placeholder="Search…" spellcheck="false" />
+            <button id="searchClear" class="icon-btn hidden" title="Clear search">✕</button>
+          </div>
+          <button id="advBtn" class="btn ghost" title="Advanced filter">
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+              <path fill="currentColor" d="M3 5h18v2l-7 7v5l-4 2v-7L3 7z"/>
+            </svg>
+            <span id="advBadge" class="badge hidden">0</span>
+          </button>
+        </div>
+        <button id="metaBtn" class="btn ghost hidden" title="File metadata">
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+            <path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/>
+          </svg>
+          Info
+        </button>
+        <button id="settingsBtn" class="btn ghost" title="Settings (⌘,)">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path fill="currentColor" d="M19.14 12.94a7.5 7.5 0 0 0 .05-1.88l2.03-1.58-2-3.46-2.39.96a7 7 0 0 0-1.62-.94L14.5 2.5h-4l-.71 3.54c-.58.24-1.12.56-1.62.94l-2.39-.96-2 3.46 2.03 1.58a7.5 7.5 0 0 0 0 1.88l-2.03 1.58 2 3.46 2.39-.96c.5.38 1.04.7 1.62.94l.71 3.54h4l.71-3.54c.58-.24 1.12-.56 1.62-.94l2.39.96 2-3.46-2.08-1.58zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Advanced filter popover -->
+    <div id="advPanel" class="adv-panel hidden">
+      <div class="adv-head">
+        <span class="adv-title">Advanced filter</span>
+        <div class="adv-match">
+          Match
+          <select id="advCombine" class="select">
+            <option value="and">all</option>
+            <option value="or">any</option>
+          </select>
+          of:
+        </div>
+      </div>
+      <div id="advConditions" class="adv-conditions"></div>
+      <button id="advAdd" class="adv-add">+ Add condition</button>
+      <div class="adv-actions">
+        <button id="advClear" class="btn ghost">Clear</button>
+        <button id="advApply" class="btn primary">Apply filter</button>
+      </div>
+    </div>
+    <div id="advBackdrop" class="popover-backdrop"></div>
+
+    <!-- Empty state / drop zone -->
+    <section id="empty" class="empty">
+      <div class="empty-card">
+        <div class="empty-icon">
+          <svg viewBox="0 0 48 48" width="60" height="60" aria-hidden="true">
+            <rect x="8" y="9" width="32" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/>
+            <line x1="8" y1="18" x2="40" y2="18" stroke="currentColor" stroke-width="2.2"/>
+            <line x1="19" y1="18" x2="19" y2="39" stroke="currentColor" stroke-width="2.2"/>
+            <line x1="30" y1="18" x2="30" y2="39" stroke="currentColor" stroke-width="2.2"/>
+          </svg>
+        </div>
+        <h1>Open a Parquet file</h1>
+        <p>Drag &amp; drop a <code>.parquet</code> file here, or click Open.</p>
+        <button id="openBtn2" class="btn primary lg">Choose File…</button>
+      </div>
+    </section>
+
+    <!-- Data table -->
+    <main id="tableWrap" class="hidden">
+      <div id="viewport" class="viewport">
+        <div id="grid" class="grid">
+          <div id="headerRow" class="header-row"></div>
+          <div id="spacer" class="spacer">
+            <div id="rows" class="rows"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Status bar -->
+    <footer id="statusBar" class="status-bar hidden">
+      <span id="statLeft"></span>
+      <span id="statCenter"></span>
+      <span id="statRight"></span>
+    </footer>
+
+    <!-- Metadata drawer -->
+    <aside id="metaPanel" class="meta-panel">
+      <div class="meta-header">
+        <h2>File Info</h2>
+        <button id="metaClose" class="icon-btn" title="Close">✕</button>
+      </div>
+      <div id="metaBody" class="meta-body"></div>
+    </aside>
+    <div id="metaBackdropEl" class="meta-backdrop"></div>
+
+    <!-- Settings window -->
+    <div id="settingsBackdrop" class="modal-backdrop"></div>
+    <div id="settingsWin" class="settings-win" role="dialog" aria-label="Settings">
+      <div class="win-head">
+        <h2>Settings</h2>
+        <button id="settingsClose" class="icon-btn" title="Close">✕</button>
+      </div>
+      <div class="win-body">
+        <div class="set-row">
+          <div class="set-label"><span>Appearance</span><small>App color theme</small></div>
+          <select id="setTheme" class="select">
+            <option value="auto">Automatic</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div class="set-row">
+          <div class="set-label"><span>Row density</span><small>Height of table rows</small></div>
+          <select id="setDensity" class="select">
+            <option value="compact">Compact</option>
+            <option value="default">Default</option>
+            <option value="comfortable">Comfortable</option>
+          </select>
+        </div>
+        <div class="set-row">
+          <div class="set-label"><span>Cell font size</span><small>Text size in cells</small></div>
+          <select id="setFont" class="select">
+            <option value="small">Small</option>
+            <option value="default">Default</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+        <div class="set-row">
+          <div class="set-label"><span>Fit columns to window</span><small>Stretch columns to fill width</small></div>
+          <label class="switch"><input type="checkbox" id="setAutoFit" /><span class="track"></span></label>
+        </div>
+        <div class="set-row">
+          <div class="set-label"><span>Case-sensitive search</span><small>Default for the search box</small></div>
+          <label class="switch"><input type="checkbox" id="setCase" /><span class="track"></span></label>
+        </div>
+        <div class="set-note">Preferences are saved on this Mac.</div>
+      </div>
+    </div>
+
+    <!-- Drop overlay -->
+    <div id="dropOverlay" class="drop-overlay">
+      <div class="drop-inner">Drop to open .parquet</div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <div id="loadingText" class="loading-text">Reading…</div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
