@@ -171,7 +171,7 @@
           <li><b>If that's blocked on newer macOS:</b> open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to the ParquetView message.</li>
           <li>
             <b>Terminal fallback:</b> remove the quarantine flag, then open normally:
-            <pre><code>xattr -dr com.apple.quarantine /Applications/ParquetView.app</code></pre>
+            <pre><code>/usr/bin/xattr -dr com.apple.quarantine /Applications/ParquetView.app</code></pre>
           </li>
         </ol>
       </section>

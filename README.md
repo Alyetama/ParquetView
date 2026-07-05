@@ -38,7 +38,7 @@ ParquetView isn't signed with an Apple Developer ID, so macOS blocks it the firs
 2. **If that's blocked on newer macOS:** open **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to the ParquetView message.
 3. **Terminal fallback:** remove the quarantine flag, then open normally:
    ```bash
-   xattr -dr com.apple.quarantine /Applications/ParquetView.app
+   /usr/bin/xattr -dr com.apple.quarantine /Applications/ParquetView.app
    ```
 
 ## Build from source
