@@ -2597,7 +2597,7 @@ dependencies = [
 
 [[package]]
 name = "parquetview"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "arrow",
  "parquet",

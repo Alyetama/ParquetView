@@ -816,11 +816,20 @@ applySettings(false);
 initSettingsControls();
 
 // A file may have been passed at launch (Finder "Open With" / `open -a`).
+// Retry a few times: on a cold launch the OS "Opened" event can land just
+// after the first poll, so one check isn't always enough.
 (async () => {
-  try {
-    const startup = await invoke("take_startup_file");
-    if (startup) openPath(startup);
-  } catch (_) {
-    /* ignore */
+  for (const delay of [0, 400, 1200]) {
+    if (delay) await new Promise((r) => setTimeout(r, delay));
+    if (fileMeta) return; // a file already opened (event or earlier poll)
+    try {
+      const startup = await invoke("take_startup_file");
+      if (startup) {
+        openPath(startup);
+        return;
+      }
+    } catch (_) {
+      /* ignore */
+    }
   }
 })();

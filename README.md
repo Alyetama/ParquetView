@@ -16,7 +16,7 @@
 
 ## Download
 
-**[⬇️ Download ParquetView for macOS](https://github.com/Alyetama/ParquetView/releases/latest/download/ParquetView.dmg)** (Apple Silicon)
+**[⬇️ Download ParquetView for macOS](https://github.com/Alyetama/ParquetView/releases/latest/download/ParquetView.dmg)** (Apple Silicon & Intel)
 
 Open the `.dmg`, drag **ParquetView** to Applications, then follow [First launch](#first-launch) below.
 

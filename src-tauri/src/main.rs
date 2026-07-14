@@ -27,6 +27,10 @@ const SEARCH_CAP: usize = 100_000;
 // against an over-large `limit`).
 const MAX_PAGE: usize = 10_000;
 
+// Cap on a single rendered cell's length, so a huge binary/blob value can't
+// produce a multi-megabyte string in the UI.
+const CELL_MAX_CHARS: usize = 2_000;
+
 // ---------------------------------------------------------------------------
 // Types serialized to the frontend
 // ---------------------------------------------------------------------------
@@ -216,7 +220,15 @@ fn append_batch_rows(
             if batch.column(c).is_null(row) {
                 record.push(None);
             } else {
-                record.push(Some(formatters[c].value(row).to_string()));
+                let v = formatters[c].value(row).to_string();
+                let v = if v.chars().count() > CELL_MAX_CHARS {
+                    let mut t: String = v.chars().take(CELL_MAX_CHARS).collect();
+                    t.push('…');
+                    t
+                } else {
+                    v
+                };
+                record.push(Some(v));
             }
         }
         out.push(record);
