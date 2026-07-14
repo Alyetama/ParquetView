@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ParquetView — a fast, native macOS Parquet viewer</title>
-    <meta name="description" content="A fast, native macOS viewer for Apache Parquet files. Opens multi-gigabyte files instantly." />
+    <title>ParquetView: a fast, native Parquet viewer for macOS</title>
+    <meta name="description" content="A fast, native Parquet viewer for macOS. Opens multi-gigabyte files by reading only what's on screen." />
     <meta property="og:title" content="ParquetView" />
     <meta property="og:description" content="A fast, native macOS viewer for Apache Parquet files." />
     <meta property="og:image" content="https://alyetama.github.io/ParquetView/mockup.png" />
@@ -131,7 +131,7 @@
     <div class="wrap">
       <header>
         <div class="logo"><span class="glyph"></span>ParquetView</div>
-        <p class="tagline">A fast, native macOS viewer for Apache&nbsp;Parquet files.</p>
+        <p class="tagline">A fast, native Parquet viewer for macOS.</p>
 
         <div class="cta">
           <a class="download" id="downloadBtn"
@@ -152,22 +152,22 @@
 
       <section class="card">
         <h2>What it does</h2>
-        <p class="lead">Everything you need to browse Parquet, nothing you don't.</p>
+        <p class="lead">The stuff you actually need when you're looking at a Parquet file.</p>
         <div class="features">
-          <div class="feat"><h3>Handles huge files</h3><p>Reads only the row groups on screen — multi‑gigabyte files open instantly.</p></div>
-          <div class="feat"><h3>Sort &amp; filter</h3><p>Sort any column; quick search or multi‑condition advanced filters (regex, ranges, AND/OR).</p></div>
-          <div class="feat"><h3>Full metadata</h3><p>Schema, types, file size, compression codec, row‑group count, writer, format version.</p></div>
-          <div class="feat"><h3>Open any way</h3><p>File picker, drag‑and‑drop, or Finder's “Open With”.</p></div>
-          <div class="feat"><h3>Inspect cells</h3><p>Double‑click a cell to copy its value or edit it inline.</p></div>
-          <div class="feat"><h3>Light &amp; dark</h3><p>Theme, row density, and font size — remembered between launches.</p></div>
+          <div class="feat"><h3>Handles huge files</h3><p>Reads row groups as you scroll, so gigabyte files open right away without eating your memory.</p></div>
+          <div class="feat"><h3>Sort &amp; filter</h3><p>Click a header to sort. Search everything, or build filters with regex, number ranges, and AND/OR.</p></div>
+          <div class="feat"><h3>Full metadata</h3><p>Schema, column types, file size, compression codec, row-group count, and the writer that made it.</p></div>
+          <div class="feat"><h3>Open any way</h3><p>File picker, drag-and-drop, or Finder's "Open With".</p></div>
+          <div class="feat"><h3>Inspect cells</h3><p>Double-click a cell to copy or edit its value.</p></div>
+          <div class="feat"><h3>Light &amp; dark</h3><p>Theme, row density, font size. It remembers what you picked.</p></div>
         </div>
       </section>
 
       <section class="card" id="open-instructions">
         <h2>How to open the app</h2>
-        <p class="lead">ParquetView isn't signed with an Apple Developer ID, so macOS blocks it the first time. This is expected — open it with <b>one</b> of these:</p>
+        <p class="lead">ParquetView isn't signed with an Apple Developer ID, so macOS blocks it the first time you open it. Nothing's wrong; you just have to tell macOS you meant it. Pick one:</p>
         <ol class="steps">
-          <li><b>Right‑click to open.</b> In Finder, <b>right‑click</b> (or Control‑click) <b>ParquetView</b> → <b>Open</b> → <b>Open</b>.</li>
+          <li><b>Right-click to open.</b> In Finder, <b>right-click</b> (or Control-click) <b>ParquetView</b>, choose <b>Open</b>, then <b>Open</b> again.</li>
           <li><b>If that's blocked on newer macOS:</b> open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to the ParquetView message.</li>
           <li>
             <b>Terminal fallback:</b> remove the quarantine flag, then open normally:
